@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import MouvieList from "./Component/MouvieList";
+import NavBar from "./Component/NavBar";
+import moviesData from "./Data/data";
+import { useState } from "react";
+import StarRating from "./Component/StarRating";
+import Add from "./Component/Add";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Component/Home";
 
 function App() {
+  const [movie, setmovie] = useState(moviesData);
+  const [input, setInput] = useState("");
+  const [starSearch, setStarSearch] = useState(0);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <>
+        <NavBar inputSearch={input} setInputSearch={setInput} />
+      </>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route
+          path="/Home/MouvieList"
+          element={
+            <MouvieList
+              STE={setStarSearch}
+              starSearch={starSearch}
+              mouvies={movie}
+              inputSearch={input}
+              setInputSearch={setInput}
+            />
+          }
+        />
+
+        <Route path={"/Home/Add"} element={<Add />} />
+      </Routes>
     </div>
   );
 }
